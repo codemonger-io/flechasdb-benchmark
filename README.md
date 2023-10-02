@@ -3,11 +3,11 @@
 Benchmark for [`flechasdb`](https://github.com/codemonger-io/flechasdb).
 
 `flechasdb` is the core library of the FlechasDB system which provides a lightweight vector database.
-This benchmark evaluates [`flechasdb`](https://github.com/codemonger-io/flechasdb) with the well-known [SIFT 1M](http://corpus-texmex.irisa.fr/#matlab) dataset which is used in [this article](https://www.pinecone.io/learn/series/faiss/product-quantization/).
+This benchmark evaluates [`flechasdb`](https://github.com/codemonger-io/flechasdb) with the well-known [SIFT 1M](http://corpus-texmex.irisa.fr/) dataset which is used in [this article](https://www.pinecone.io/learn/series/faiss/product-quantization/).
 It measures the following:
 - One-shot time to build a database from `sift/sift_base.fvecs`
     - Number of vectors: 1,000,000
-    - Number of partitions: 2048
+    - Number of partitions: 2,048
     - Number of codes: 256
 - Database disk usage
 - Statistics over 10,000 queries from `sift/sift_query.fvecs` (synchronous / asynchronous)
@@ -19,12 +19,12 @@ It measures the following:
         - 3rd quartile (Q3)
         - Minimum (min)
         - Maximum (max)
-    - Metrics for query time in milliseconds
-    - Metrics for recall (%)
-        - Recall is defined as the percentage of k-NN vectors that are in the reference set made by flat k-NN search\*.
+    - Above metrics for query time in milliseconds
+    - Above metrics for recall (%)
+        - Recall is defined as the percentage of k-nearest neighbor (k-NN) vectors that are in the reference set made by flat k-NN search\*.
     - Parameters
-        - k-nearest-neighbors where k=100
-        - nprobe
+        - k(-NN): 100
+        - nprobe:
             - 1
             - 10
             - 20
@@ -81,6 +81,8 @@ The following sections suppose that the dataset is extracted in `sift` folder an
 
 ### Building a database
 
+You have to [prepare the SIFT 1M dataset](#preparing-the-sift-1m-dataset) first.
+
 The following command will read the vector set from `sift/sift_base.fvecs`, build a database, and save it in `database` folder with the default parameters:
 
 ```sh
@@ -117,7 +119,7 @@ Options:
 
 You have to [build the database](#building-a-database) first.
 
-The following command will load a database in `database` folder and search k-nearest neighbors for a query vector randomly chosen from `sift/sift_query.fvecs`:
+The following command will load a database in `database` folder and search k-NN for a query vector randomly chosen from `sift/sift_query.fvecs`:
 
 ```sh
 cargo run --release -- query sift/sift_base.fvecs database/*.binpb sift/sift_query.fvecs
@@ -148,7 +150,7 @@ Options:
 
 You have to [build the database](#building-a-database) first.
 
-The following command will load a database in `database` folder and benchmark the performance with a query vector set `sift/sift_query.fvecs` with default parameters:
+The following command will load a database in `database` folder and measure the performance with a query vector set `sift/sift_query.fvecs` with default parameters:
 
 ```sh
 cargo run --release -- batch sift/sift_base.fvecs database/*.binpb sift/sift_query.fvecs
