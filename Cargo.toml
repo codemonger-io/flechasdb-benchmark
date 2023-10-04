@@ -11,7 +11,7 @@ authors = ["Kikuo Emoto <kemoto@codemonger.io>"]
 anyhow = "1.0"
 byteorder = "1.4"
 clap = { version = "4.4", features = ["derive"] }
-flechasdb = { path = "../flechasdb" }
+flechasdb = { git = "https://github.com/codemonger-io/flechasdb.git", tag = "v0.1.0" }
 futures = "0.3"
 rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
