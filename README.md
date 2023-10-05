@@ -3,7 +3,7 @@
 Benchmark for [`flechasdb`](https://github.com/codemonger-io/flechasdb).
 
 `flechasdb` is the core library of the FlechasDB system which provides a lightweight vector database.
-This benchmark evaluates [`flechasdb`](https://github.com/codemonger-io/flechasdb) with the well-known [SIFT 1M](http://corpus-texmex.irisa.fr/) dataset which is used in [this article](https://www.pinecone.io/learn/series/faiss/product-quantization/).
+This benchmark evaluates [`flechasdb`](https://github.com/codemonger-io/flechasdb) with the publicly available [SIFT 1M](http://corpus-texmex.irisa.fr/) dataset which is used in [this article](https://www.pinecone.io/learn/series/faiss/product-quantization/).
 It measures the following:
 - One-shot time to build a database from `sift/sift_base.fvecs`
     - Number of vectors: 1,000,000
@@ -36,37 +36,38 @@ It measures the following:
 ## Results
 
 Here are results on my machine (Apple M1 Pro, 32GB RAM, 1TB SSD).
+`flechasdb` version was `0.1.0`.
 
 ### Results: building a database
 
-It took about 6,015 seconds to build and 4.5 seconds to save the database.
-Disk usage was about 77.5 MB, where the database header file was about 185 KB.
+It took about 5,880 seconds to build and 5.7 seconds to save the database.
+Disk usage was about 61.1 MB, where the database header file was about 139 KB.
 
 ### Results: query time (ms)
 
 | sync/async/flat | nprobe | μ ± σ | med | Q1 | Q3 | min | max |
 | --------------- | ------ | ----- | --- | --- | --- | -- | -- |
-| sync | 1 | 0.548 ± 0.631 | 0.455 | 0.411 | 0.547 | 0.275 | 52.206 |
-| async | 1 | 0.784 ± 0.446 | 0.666 | 0.619 | 0.769 | 0.459 | 31.456 |
-| sync | 10 | 3.131 ± 1.303 | 2.844 | 2.523 | 3.274 | 1.747 | 32.443 |
-| async | 10 | 1.327 ± 0.876 | 1.205 | 1.112 | 1.321 | 0.798 | 52.946
-| sync | 20 | 4.735 ± 1.022 | 4.606 | 4.113 | 5.182 | 2.821 | 40.918 |
-| async | 20 | 1.771 ± 0.877 | 1.641 | 1.506 | 1.813 | 1.105 | 33.117 |
-| sync | 50 | 12.756 ± 1.843 | 12.587 | 11.338 | 14.012 | 8.503 | 43.592 |
-| async | 50 | 3.062 ± 1.110 | 2.936 | 2.713 | 3.187 | 2.109 | 55.332 |
-| sync | 2048 | 395.638 ± 7.980 | 395.591 | 391.266 | 399.507 | 380.793 | 969.689 |
-| async | 2048 | 82.381 ± 4.814 | 82.006 | 81.325 | 83.001 | 79.716 | 477.053 |
+| sync | 1 | 0.566 ± 0.431 | 0.453 | 0.409 | 0.552 | 0.251 | 29.829 |
+| async | 1 | 0.818 ± 0.711 | 0.645 | 0.601 | 0.747 | 0.458 | 53.028 |
+| sync | 10 | 2.636 ± 0.788 | 2.495 | 2.234 | 2.823 | 1.449 | 32.969 |
+| async | 10 | 1.396 ± 1.119 | 1.210 | 1.117 | 1.324 | 0.814 | 34.000 |
+| sync | 20 | 4.946 ± 1.557 | 4.677 | 4.186 | 5.280 | 2.974 | 36.120 |
+| async | 20 | 1.884 ± 1.333 | 1.649 | 1.523 | 1.798 | 1.134 | 44.262 |
+| sync | 50 | 11.342 ± 2.099 | 11.107 | 10.051 | 12.299 | 7.743 | 44.177 |
+| async | 50 | 3.131 ± 1.634 | 2.897 | 2.696 | 3.133 | 2.150 | 62.028 |
+| sync | 2048 | 398.281 ± 5.754 | 398.369 | 394.381 | 401.831 | 384.762 | 710.972 |
+| async | 2048 | 84.778 ± 6.885 | 84.447 | 83.744 | 85.170 | 81.530 | 518.380 |
 | flat | n/a | 72.878 ± 1.045 | 72.679 | 72.137 | 73.351 | 71.342 | 94.256 |
 
 ### Results: recall (%)
 
 | nprobe | μ ± σ | med | Q1 | Q3 | min | max |
 | ------ | ----- | --- | --- | --- | -- | -- |
-| 1 | 22.6 ± 15.2 | 19.0 | 11.0 | 30.0 | 0.0 | 90.0 |
-| 10 | 45.5 ± 11.9 | 45.0 | 37.0 | 53.0 | 8.0 | 90.0 |
-| 20 | 47.9 ± 10.7 | 47.0 | 40.0 | 55.0 | 17.0 | 90.0
-| 50 | 48.9 ± 10.0 | 48.0 | 42.0 | 55.0 | 17.0 | 90.0 |
-| 2048 | 49.1 ± 9.8 | 48.0 | 42.0 | 55.0 | 18.0 | 90.0 |
+| 1 | 22.6 ± 15.3 | 19.0 | 11.0 | 30.0 | 0.0 | 89.0 |
+| 10 | 45.6 ± 11.9 | 45.0 | 37.0 | 53.0 | 7.0 | 89.0 |
+| 20 | 47.9 ± 10.7 | 47.0 | 40.0 | 55.0 | 10.0 | 89.0 |
+| 50 | 48.9 ± 10.0 | 48.0 | 42.0 | 55.0 | 15.0 | 89.0 |
+| 2048 | 49.1 ± 9.8 | 48.0 | 42.0 | 55.0 | 19.0 | 89.0 |
 
 Sync or async does not matter to recalls.
 
@@ -86,15 +87,14 @@ You have to [prepare the SIFT 1M dataset](#preparing-the-sift-1m-dataset) first.
 The following command will read the vector set from `sift/sift_base.fvecs`, build a database, and save it in `database` folder with the default parameters:
 
 ```sh
-mkdir database
 cargo run --release -- build sift/sift_base.fvecs database
 ```
 
 You will find a file ending with `.binpb` in `database` folder, which is the database header file.
 Here is an example of `database` folder contents:
-- `5xm2LZluq4xGfGAMwtIukv3v4sfKSqrde0hRVRIJnlQ.binpb`
 - `attributes/`
 - `codebooks/`
+- `jsSHz9ujU9HSpXHxjfwBAm0TiSUZq8MvYnYfF_1ZOXM.binpb` &leftarrow; database header file
 - `partitions/`
 
 Passing `--help` flag to the command will show the usage:
